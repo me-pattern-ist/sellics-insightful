@@ -39,7 +39,13 @@ public class ManagementController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    // curl -i -X POST http://localhost:7171/api/admin/jobs
+    /*
+     * This method is used to initiate a batch job asynchronously. Its monitoring url will shared in header parameter
+     * as location.
+     *
+     * curl -i -X POST http://localhost:7171/api/admin/jobs
+     *
+     */
     @PostMapping("/jobs")
     public ResponseEntity submitIngestJob() {
         String jobId = UUID.randomUUID().toString();
@@ -69,7 +75,11 @@ public class ManagementController {
         return ResponseEntity.created(location).build();
     }
 
-    // curl -X GET -i http://localhost:7171/api/admin/jobs/<id-here>
+    /*
+     * Method to monitor job which triggered ingestion process.
+     *
+     * curl -X GET -i http://localhost:7171/api/admin/jobs/<id-here>
+     */
     @GetMapping("/jobs/{id}")
     public ResponseEntity getIngestJobDetails(@PathVariable String id) {
         LOGGER.info("Try getting job status for id {}", id);

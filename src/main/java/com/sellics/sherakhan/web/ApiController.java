@@ -28,9 +28,14 @@ public class ApiController {
     }
 
 
-    //    curl -i -X GET --location "http://localhost:7171/api/ranks/products"
-    //    curl -i -X GET --location "http://localhost:7171/api/ranks/products?serialNumber=B09LS4PB8P"
-    //    curl -i -X GET --location "http://localhost:7171/api/ranks/products?startDate=1635988126&endDate=1637199767&serialNumber=B09LS4PB8P"
+    /*
+     * Get consolidated report of products according to serialNumber(asin) and/or start date and end date combination.
+     *
+     * curl -i -X GET --location "http://localhost:7171/api/ranks/products"
+     * curl -i -X GET --location "http://localhost:7171/api/ranks/products?serialNumber=B09LS4PB8P"
+     * curl -i -X GET --location "http://localhost:7171/api/ranks/products?startDate=1635988126&endDate=1637199767&serialNumber=B09LS4PB8P"
+     *
+     */
     @RequestMapping(value = "/ranks/products", method = GET, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Map<String, Object>>> aggregateRankOfProducts(
             @RequestParam(required = false, value = "serialNumber") final String serialNumber,
@@ -76,8 +81,14 @@ public class ApiController {
         return ResponseEntity.ok(data);
     }
 
-    // curl -i -X GET --location "http://localhost:7171/api/keywords/products?keyword=2012"
-    // curl -i -X GET --location "http://localhost:7171/api/keywords/products?keyword=2012&startDate=1637187600&endDate=1637199767"
+
+    /*
+     * Get consolidated report of products according to keywords and/or start date and end date combination.
+     *
+     * curl -i -X GET --location "http://localhost:7171/api/keywords/products?keyword=2012"
+     * curl -i -X GET --location "http://localhost:7171/api/keywords/products?keyword=2012&startDate=1637187600&endDate=1637199767"
+     *
+     */
     @RequestMapping(value = "/keywords/products", method = GET, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Map<String, Object>>> allProductsByKeywords(
             @RequestParam(required = true, value = "keyword") final String keyword,

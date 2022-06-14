@@ -38,9 +38,14 @@ public class BatchConfiguration {
     private Environment environment;
 
 
+    /*
+     * This method is used to read csv file from source i.e S3 bucket.
+     * First line of csv will get skip.
+     * Content of csv file will map to CSVModel bean
+     */
     @Bean
     @StepScope
-    public FlatFileItemReader<CSVModel> csvReader(AmazonS3 amazonS3Client) throws IOException {
+    public FlatFileItemReader<CSVModel> csvReaderFrom(AmazonS3 amazonS3Client) throws IOException {
         FlatFileItemReader<CSVModel> reader = new FlatFileItemReader<>();
         S3Resource s3Resource = new S3Resource(
                 environment.getProperty("source.s3.bucket.name"),
@@ -59,6 +64,9 @@ public class BatchConfiguration {
         return reader;
     }
 
+    /*
+     * This method will ingest csv data into database.
+     */
     @Bean
     public JdbcBatchItemWriter<IngestionModel> sqlWriter(DataSource dataSource) {
         String sql = "INSERT INTO product_ranks (event_date, serial_number, keywords, rank) " +
@@ -70,21 +78,32 @@ public class BatchConfiguration {
                 .build();
     }
 
+    /*
+     * This method is simply a mapper function to convert CSVModel to IngestionModel
+     */
+
     @Bean
     public IngestionModelProcessor modelProcessor() {
         return new IngestionModelProcessor();
     }
 
+
+    /*
+     * Builder step to define reading from csv, convert it to ingestion model and write to database.
+     */
     @Bean
     public Step pipelineStep(JdbcBatchItemWriter<IngestionModel> sqlWriter, AmazonS3 amazonS3Client) throws IOException {
         return stepBuilderFactory.get("pipelineStep")
                 .<CSVModel, IngestionModel>chunk(5000)
-                .reader(csvReader(amazonS3Client))
+                .reader(csvReaderFrom(amazonS3Client))
                 .processor(modelProcessor())
                 .writer(sqlWriter)
                 .build();
     }
 
+    /*
+     * Job to connect steps with monitoring listener
+     */
     @Bean
     public Job ingestionJob(IngestionCompletionNotificationListener listener, Step pipelineStep) {
         return jobBuilderFactory.get("ingestionJob")
