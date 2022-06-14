@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    restart: always
+    container_name: db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=search_engine_db
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+
+  app:
+    image: 'sellics-insightful:latest'
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "7171:8080"
+    depends_on:
+      - db
