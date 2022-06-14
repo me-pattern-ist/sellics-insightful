@@ -27,6 +27,12 @@ bash-5.1# exit
 - Try to model pojos to hold state.
 - Thought to add aws config bean just to start.
 - Read about spring batch to make connection with aws s3 and load data into database.
+- Made data load on demand using rest apis.
+```shell
+curl -i -X POST http://localhost:7171/api/admin/jobs
+curl -i -X GET http://localhost:7171/api/admin/jobs/<id-here>
+```
+- 
 
 # Project Environment Used
 - Java 1.8
