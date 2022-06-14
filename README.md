@@ -23,6 +23,7 @@ search_engine_db-# \d
 search_engine_db-# \q
 bash-5.1# exit
 ```
+- Read about spring batch to make schema init execution happened at server startup.
 
 # Project Environment Used
 - Java 1.8
