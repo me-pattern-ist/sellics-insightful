@@ -2,7 +2,13 @@
 
 Consolidate information from csv data.
 
-# Approach
+# Solution approach
+- Using Spring batch to load data from s3 into postgres using spring batch asynchronously.
+- Expose rest endpoints to monitor jobs and get consolidated information from database.
+- With current trends, this could have been implemented using spark/flink in memory processing which are more expressive in coding style and concise.
+
+
+# Thoughts while working
 - Setting up workspace with profiles to have checkstyle, spotbugs in place.
 ```shell
 mvn clean package
