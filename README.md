@@ -24,6 +24,7 @@ search_engine_db-# \q
 bash-5.1# exit
 ```
 - Read about spring batch to make schema init execution happened at server startup.
+- Try to model pojos to hold state.
 
 # Project Environment Used
 - Java 1.8
