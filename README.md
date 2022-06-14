@@ -32,7 +32,17 @@ bash-5.1# exit
 curl -i -X POST http://localhost:7171/api/admin/jobs
 curl -i -X GET http://localhost:7171/api/admin/jobs/<id-here>
 ```
-- 
+- Added api to generate consolidate reports.
+```shell
+curl -i -X GET --location "http://localhost:7171/api/ranks/products"
+curl -i -X GET --location "http://localhost:7171/api/ranks/products?serialNumber=B09LS4PB8P"
+curl -i -X GET --location "http://localhost:7171/api/ranks/products?startDate=1635988126&endDate=1637199767&serialNumber=B09LS4PB8P"
+
+curl -i -X GET --location "http://localhost:7171/api/keywords/products?keyword=2012"
+curl -i -X GET --location "http://localhost:7171/api/keywords/products?keyword=2012&startDate=1637187600&endDate=1637199767"
+```
+- TODO Added some input validation to api, service layer and integration test.
+
 
 # Project Environment Used
 - Java 1.8
